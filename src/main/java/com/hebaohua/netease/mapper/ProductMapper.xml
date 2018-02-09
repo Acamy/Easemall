@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hebaohua.netease.mapper.ProductMapper" >
+
+    <resultMap id="BaseResultMap" type="com.hebaohua.netease.entity.Product" >
+        <id column="prodId" property="prodId" jdbcType="INTEGER" />
+        <result column="prodTitle" property="prodTitle" jdbcType="VARCHAR" />
+        <result column="prodSummary" property="prodSummary" jdbcType="VARCHAR" />
+        <result column="prodImgUrl" property="prodImgUrl" jdbcType="VARCHAR" />
+        <result column="prodDetail" property="prodDetail" jdbcType="VARCHAR" />
+        <result column="prodPrice" property="prodPrice" jdbcType="DOUBLE" />
+        <result column="isBuy" property="isBuy" jdbcType="BOOLEAN" />
+        <result column="isSell" property="isSell" jdbcType="BOOLEAN" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        prodId, prodTitle, prodSummary, prodImgUrl, prodDetail, prodPrice, isBuy, isSell
+    </sql>
+
+    <select id="selectProdById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from product
+        where prodId = #{prodId,jdbcType=INTEGER}
+        order by prodId asc
+    </select>
+
+    <select id="listProducts" resultType="com.hebaohua.netease.entity.Product">
+        select
+        <include refid="Base_Column_List" />
+        from product
+        order by prodImgUrl desc
+    </select>
+
+    <delete id="deleteByProdId" parameterType="java.lang.Integer" >
+        delete from product
+        where prodId = #{prodId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insertProd" parameterType="com.hebaohua.netease.entity.Product" >
+        insert into product
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="prodId != null" >
+                prodId,
+            </if>
+            <if test="prodTitle != null" >
+                prodTitle,
+            </if>
+            <if test="prodSummary != null" >
+                prodSummary,
+            </if>
+            <if test="prodImgUrl != null" >
+                prodImgUrl,
+            </if>
+            <if test="prodDetail != null" >
+                prodDetail,
+            </if>
+            <if test="prodPrice != null" >
+                prodPrice,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="prodId != null" >
+                #{prodId,jdbcType=INTEGER},
+            </if>
+            <if test="prodTitle != null" >
+                #{prodTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="prodSummary != null" >
+                #{prodSummary,jdbcType=VARCHAR},
+            </if>
+            <if test="prodImgUrl != null" >
+                #{prodImgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="prodDetail != null" >
+                #{prodDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="prodPrice != null" >
+                #{prodPrice,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateProduct" parameterType="com.hebaohua.netease.entity.Product" >
+        update product
+        <set >
+            <if test="prodTitle != null" >
+                prodTitle = #{prodTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="prodSummary != null" >
+                prodSummary = #{prodSummary,jdbcType=VARCHAR},
+            </if>
+            <if test="prodImgUrl != null" >
+                prodImgUrl = #{prodImgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="prodDetail != null" >
+                prodDetail = #{prodDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="prodPrice != null" >
+                prodPrice = #{prodPrice,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where prodId =  #{prodId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -4,14 +4,14 @@
 		return;
 	}
 
+    var name = 'products';
+    var products = JSON.parse(util.getCookie(name));
 
 	var $ = function(id){
 		return document.getElementById(id);
 	}
 	
 
-
-	$("newTable").innerHTML = str;
 
 	window.onload = function(){
 		$('newTable').onclick = function(e){
@@ -42,7 +42,7 @@
 	var layer = new Layer();
 	$('Account').onclick = function(e){
 		var newProducts = products.map(function(arr){
-			return {'id':arr.id,'number':arr.num};
+			return {'id':arr.prodId,'number':arr.prodNum};
 		});
 		console.log(newProducts);
 		var ele = e.target;

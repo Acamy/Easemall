@@ -29,12 +29,12 @@
 		},
         findOne:function(array,id){
             return array.filter(function(item){
-                return item.id == id;
+                return item.prodId == id;
             })[0];
         },
         modifyOne:function(array,id,num){
             var item = this.findOne(array,id);
-            item.num = num;
+            item.prodNum = num;
         },
         modifyTwo:function(array,id,num){
             var item = this.findOne(array,id);

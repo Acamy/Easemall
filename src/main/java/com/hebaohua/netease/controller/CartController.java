@@ -5,14 +5,16 @@ import com.hebaohua.netease.entity.Product;
 import com.hebaohua.netease.entity.User;
 import com.hebaohua.netease.service.CartService;
 import com.hebaohua.netease.service.ProductService;
+import com.hebaohua.netease.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +51,7 @@ public class CartController {
     }
 
     @RequestMapping("/listCart")
-    public String listCart(HttpSession session,ModelMap modelMap){
+    public String listCart(HttpServletResponse response, HttpSession session, ModelMap modelMap){
         User user = (User)session.getAttribute("user");
         List<Map<String, Object>> cartList = new ArrayList<Map<String, Object>>();
         if( user!=null){
@@ -62,9 +64,22 @@ public class CartController {
                 map.put("prodPrice", product.getProdPrice());
                 map.put("prodNum", cart.getNum());
                 cartList.add(map);
+
             }
         }
         modelMap.put("cartList", cartList);
+        response.addCookie(new Cookie("products", JsonUtil.write2JsonStr(cartList)));
         return "cart";
+    }
+
+    @RequestMapping("/api/buy")
+    public void buy(@RequestBody String data){
+
+        List<Map<String, Object>> list = JsonUtil.jsonArray2List(data);
+        for(Map<String , Object> map : list){
+            Integer prodId = (Integer)map.get("id");
+            Integer prodNum = (Integer)map.get("number");
+            System.out.println(prodId + ":" + prodNum);
+        }
     }
 }

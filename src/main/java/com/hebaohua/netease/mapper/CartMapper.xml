@@ -17,8 +17,15 @@
         select
         <include refid="Base_Column_List" />
         from cart
-        where userId = #{userId,jdbcType=INTEGER}
+        where userId = #{userId,jdbcType=INTEGER} and isBuy = 0
         order by cartId desc
+    </select>
+
+    <select id="selectCartById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from cart
+        where cartId = #{cartId,jdbcType=INTEGER}
     </select>
 
     <insert id="addCart" parameterType="com.hebaohua.netease.entity.Cart" >
@@ -52,4 +59,19 @@
             </if>
         </trim>
     </insert>
+
+    <update id="updateCart" parameterType="com.hebaohua.netease.entity.Cart" >
+        update cart
+        <set >
+            <if test="num != null" >
+                num = #{num,jdbcType=INTEGER},
+            </if>
+            <if test="isBuy != null" >
+                isBuy = #{isBuy,jdbcType=INTEGER},
+            </if>
+        </set>
+        where userId = #{userId,jdbcType=INTEGER}
+            and prodId = #{prodId,jdbcType=INTEGER}
+    </update>
+
 </mapper>

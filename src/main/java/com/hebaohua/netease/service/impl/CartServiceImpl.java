@@ -1,6 +1,7 @@
 package com.hebaohua.netease.service.impl;
 
 import com.hebaohua.netease.entity.Cart;
+import com.hebaohua.netease.entity.Order;
 import com.hebaohua.netease.mapper.CartMapper;
 import com.hebaohua.netease.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,15 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<Cart> listCartsByUser(int userId) {
         return cartMapper.listCartsByUser(userId);
+    }
+
+    @Override
+    public int updateCart(Cart cart){
+        return cartMapper.updateCart(cart);
+    }
+
+    @Override
+    public Cart selectCartById(int cartId){
+        return cartMapper.selectCartById(cartId);
     }
 }

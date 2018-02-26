@@ -38,11 +38,15 @@
 		};
 	};
 
+    $('back').onclick = function(){
+        location.href = "/";
+    }
+
 	var loading = new Loading();
 	var layer = new Layer();
 	$('Account').onclick = function(e){
 		var newProducts = products.map(function(arr){
-			return {'id':arr.prodId,'number':arr.prodNum};
+			return {'cartId':arr.cartId,'id':arr.prodId,'number':arr.prodNum};
 		});
 		console.log(newProducts);
 		var ele = e.target;
@@ -60,7 +64,7 @@
 				                if(status >= 200 && status < 300 || status == 304){
 				                	var json = JSON.parse(xhr.responseText);
 				                	if(json && json.code == 200){
-				                		loading.result('购买成功',function(){location.href = './account.html';});
+				                		loading.result('购买成功',function(){location.href = '/listOrders';});
 				                		util.deleteCookie(name);
 				                	}else{
 				                		alert(json.message);
@@ -77,7 +81,6 @@
 			}).show();
 			return;
 	};
-	$('back').onclick = function(){
-		location.href = window.history.back();
-	}
+
+
 })(window,document);

@@ -11,6 +11,16 @@ public class Cart {
     private int userId;
     private int num;
 
+    public int getIsBuy() {
+        return isBuy;
+    }
+
+    public void setIsBuy(int isBuy) {
+        this.isBuy = isBuy;
+    }
+
+    private int isBuy;
+
     public int getCartId() {
         return cartId;
     }

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hebaohua.netease.mapper.OrderMapper" >
+
+    <resultMap id="BaseResultMap" type="com.hebaohua.netease.entity.Order" >
+        <id column="orderId" property="orderId" jdbcType="INTEGER" />
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="prodId" property="prodId" jdbcType="INTEGER" />
+        <result column="prodTitle" property="prodTitle" jdbcType="VARCHAR" />
+        <result column="prodImgUrl" property="prodImgUrl" jdbcType="VARCHAR" />
+        <result column="prodPrice" property="prodPrice" jdbcType="DOUBLE" />
+        <result column="prodNum" property="prodNum" jdbcType="INTEGER" />
+        <result column="buyTime" property="buyTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        orderId, userId, prodId, prodTitle, prodImgUrl, prodPrice, prodNum, buyTime
+    </sql>
+
+    <select id="listOrdersByUserId" resultType="com.hebaohua.netease.entity.Order">
+        select
+        <include refid="Base_Column_List" />
+        from orders
+        where userId = #{userId,jdbcType=INTEGER}
+        order by orderId desc
+    </select>
+
+    <insert id="addOrder" parameterType="com.hebaohua.netease.entity.Order" >
+        insert into orders
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="orderId != null" >
+                orderId,
+            </if>
+            <if test="userId != null" >
+                userId,
+            </if>
+            <if test="prodId != null" >
+                prodId,
+            </if>
+            <if test="prodTitle != null" >
+                prodTitle,
+            </if>
+            <if test="prodPrice != null" >
+                prodPrice,
+            </if>
+            <if test="prodImgUrl != null" >
+                prodImgUrl,
+            </if>
+            <if test="prodNum != null" >
+                prodNum,
+            </if>
+            <if test="buyTime != null" >
+                buyTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="orderId != null" >
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="prodId != null" >
+                #{prodId,jdbcType=INTEGER},
+            </if>
+            <if test="prodTitle != null" >
+                #{prodTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="prodPrice != null" >
+                #{prodPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="prodImgUrl != null" >
+                #{prodImgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="prodNum != null" >
+                #{prodNum,jdbcType=INTEGER},
+            </if>
+            <if test="buyTime != null" >
+                #{buyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

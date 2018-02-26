@@ -9,4 +9,8 @@ public interface CartMapper {
     int addCart(Cart cart);
 
     List<Cart> listCartsByUser(int userId);
+
+    Cart selectCartById(int cartId);
+
+    int updateCart(Cart cart);
 }

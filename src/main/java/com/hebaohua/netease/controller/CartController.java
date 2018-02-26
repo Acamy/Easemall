@@ -40,11 +40,30 @@ public class CartController {
                           ModelMap map){
         User user = (User)session.getAttribute("user");
         if( user!=null){
+            List<Cart> carts = cartService.listCartsByUser(user.getUserId());
+
             Cart cart = new Cart();
-            cart.setUserId(user.getUserId());
-            cart.setProdId(prodId);
-            cart.setNum(num);
-            cartService.addCart(cart);
+            // 判断用户的购物车中是否有该产品
+            boolean isProdInCart = false;
+            for(Cart c : carts){
+                if(c.getProdId() == prodId){
+                    isProdInCart = true;
+                    cart = c;
+                }
+            }
+
+            if(!isProdInCart){
+                // 如果没有则添加进去
+                cart.setUserId(user.getUserId());
+                cart.setProdId(prodId);
+                cart.setNum(num);
+                cartService.addCart(cart);
+            }else{
+                //如果有则update add num
+                cart.setNum(cart.getNum() + num);
+                cartService.updateCart(cart);
+            }
+
         }
         map.addAttribute("result", true);
         map.addAttribute("code", 200);
@@ -59,6 +78,7 @@ public class CartController {
             for(Cart cart : carts){
                 Product product = productService.selectProdById(cart.getProdId());
                 Map<String, Object> map = new HashMap<String, Object>();
+                map.put("cartId", cart.getCartId());
                 map.put("prodId", product.getProdId());
                 map.put("prodTitle",product.getProdTitle());
                 map.put("prodPrice", product.getProdPrice());
@@ -72,14 +92,5 @@ public class CartController {
         return "cart";
     }
 
-    @RequestMapping("/api/buy")
-    public void buy(@RequestBody String data){
 
-        List<Map<String, Object>> list = JsonUtil.jsonArray2List(data);
-        for(Map<String , Object> map : list){
-            Integer prodId = (Integer)map.get("id");
-            Integer prodNum = (Integer)map.get("number");
-            System.out.println(prodId + ":" + prodNum);
-        }
-    }
 }

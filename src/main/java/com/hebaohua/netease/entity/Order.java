@@ -14,7 +14,17 @@ public class Order {
     private String prodTitle;
     private String prodImgUrl;
     private Double prodPrice;
-    private Date date;
+
+    public int getProdNum() {
+        return prodNum;
+    }
+
+    public void setProdNum(int prodNum) {
+        this.prodNum = prodNum;
+    }
+
+    private int prodNum;
+    private Date buyTime;
 
     public int getOrderId() {
         return orderId;
@@ -40,8 +50,8 @@ public class Order {
         return prodPrice;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getBuyTime() {
+        return buyTime;
     }
 
     public void setOrderId(int orderId) {
@@ -68,7 +78,7 @@ public class Order {
         this.prodPrice = prodPrice;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setBuyTime(Date date) {
+        this.buyTime = date;
     }
 }

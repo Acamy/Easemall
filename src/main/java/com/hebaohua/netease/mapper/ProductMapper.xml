@@ -99,6 +99,12 @@
             <if test="prodPrice != null" >
                 prodPrice = #{prodPrice,jdbcType=DOUBLE},
             </if>
+            <if test="isBuy != null" >
+                isBuy = #{isBuy,jdbcType=DOUBLE},
+            </if>
+            <if test="isSell != null" >
+                isSell = #{isSell,jdbcType=DOUBLE},
+            </if>
         </set>
         where prodId =  #{prodId,jdbcType=INTEGER}
     </update>

@@ -33,6 +33,8 @@ public class OrderController {
     @Autowired
     CartService cartService;
 
+
+    // 已进行事务管理
     @RequestMapping("/api/buy")
     public void buy(@RequestBody String data, HttpSession session, ModelMap mapp){
         List<Map<String, Object>> list = JsonUtil.jsonArray2List(data);
@@ -43,12 +45,16 @@ public class OrderController {
                 Integer prodId = (Integer)map.get("id");
                 Integer prodNum = (Integer)map.get("number");
 
+                // 更新购物车中商品的状态
                 Cart cart = cartService.selectCartById(cartId);
                 cart.setIsBuy(1);
                 cartService.updateCart(cart);
 
-
+                // 更新商品自身的状态
                 Product product = productService.selectProdById(prodId);
+                product.setIsBuy(true);
+                product.setIsSell(true);
+                productService.updateProduct(product);
 
                 Order order = new Order();
                 order.setUserId(user.getUserId());

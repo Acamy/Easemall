@@ -22,7 +22,7 @@
                 <#if user?? && user.userType==0>
                     <#if product.isBuy>
                     <span class="u-btn u-btn-primary z-dis">已购买</span>
-                    <span class="buyprice">当时购买价格：¥${product.buyPrice}</span>
+                    <span class="buyprice">当时购买价格：¥${productBuyPrice}</span>
                     <#else>
                     <div class="num">购买数量
                         <span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum">1</span><span id="addNum" class="moreNum"><a>+</a></span>

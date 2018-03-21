@@ -39,7 +39,7 @@
 	};
 
     $('back').onclick = function(){
-        location.href = "/";
+        window.history.back();
     }
 
 	var loading = new Loading();

@@ -51,6 +51,7 @@ body{padding-bottom:50px;}
 .u-btn-primary:hover{background-color:#bc1e40;}
 .u-btn-primary:active{background-color:#a61a38;}
 .u-btn-lg{padding:0 15px;height:40px;line-height:38px;font-size:18px;}
+.u-btn-upload{padding:0 15px;height:30px;line-height:28px;font-size:15px;}
 .u-btn-sm{padding:0 10px;height:26px;line-height:24px;font-size:12px;}
 .u-btn-xs{padding:0 10px;height:22px;line-height:20px;font-size:12px;}
 .u-btn-block{display:block;width:100%;}

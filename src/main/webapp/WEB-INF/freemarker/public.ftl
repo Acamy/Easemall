@@ -9,7 +9,7 @@
         <h2>内容发布</h2>
     </div>
     <div class="n-public">
-        <form class="m-form m-form-ht" id="form" method="post" action="/publicSubmit" onsubmit="return false;" autocomplete="off">
+        <form class="m-form m-form-ht" id="form" method="post" action="/publicSubmit" enctype="multipart/form-data" onsubmit="return false;" autocomplete="off">
             <div class="fmitem">
                 <label class="fmlab">标题：</label>
                 <div class="fmipt">
@@ -19,13 +19,14 @@
             <div class="fmitem">
                 <label class="fmlab">摘要：</label>
                 <div class="fmipt">
-                    <input class="u-ipt ipt" name="summary" placeholder="2-140字符"/> 
+                    <input class="u-ipt ipt" name="summary" placeholder="2-140字符"/>
                 </div>
             </div>
             <div class="fmitem">
                 <label class="fmlab">图片：</label>
                 <div class="fmipt">
-                    <input class="u-ipt ipt" name="image" placeholder="图片地址"/>
+                    <input id='img_id' class="u-ipt ipt" name="image" placeholder="图片地址"/>
+                    <input type="file" id="imageUpload" name="imgFile" />
                 </div>
             </div>
             <div class="fmitem">

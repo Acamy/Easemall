@@ -28,7 +28,7 @@
                         <span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum">1</span><span id="addNum" class="moreNum"><a>+</a></span>
                     </div>
                     <div class="oprt f-cb">
-                        <button class="u-btn u-btn-primary" data-buy="${product.prodId}">加入购物车</button>
+                        <button class="u-btn u-btn-primary" data-buy="${product.prodId}">购买</button>
                     </div>
                     </#if>
                 </#if>

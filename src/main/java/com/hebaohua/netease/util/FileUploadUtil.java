@@ -13,12 +13,12 @@ import java.io.File;
  */
 public class FileUploadUtil {
     // 自定义上传文件存储目录
-    private static final String UPLOAD_DIRECTORY = "upload";
+    private static final String UPLOAD_DIRECTORY = "WEB-INF/upload";
 
     //MultipartFile上传文件
-    public static String getFileInfo(HttpServletRequest request, HttpServletResponse response, MultipartFile file) {
+    public static String getFileInfo(HttpServletRequest request, MultipartFile file) {
         String filePath = new String();
-        String uploadPath = request.getSession().getServletContext().getRealPath("./") + UPLOAD_DIRECTORY;
+        String uploadPath = request.getSession().getServletContext().getRealPath("/") + UPLOAD_DIRECTORY;
 
         // 如果目录不存在则创建
         File uploadDir = new File(uploadPath);
@@ -37,6 +37,6 @@ public class FileUploadUtil {
                 e.printStackTrace();
             }
         }
-        return filePath;
+        return "upload/" + file.getOriginalFilename();
     }//函数结束符
 }

@@ -13,10 +13,17 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderMapper orderMapper;
 
+    @Override
     public int addOrder(Order order){
         return orderMapper.addOrder(order);
     }
 
+    @Override
+    public int getSoldNumByProdId(int prodId){
+        return orderMapper.getSoldNumByProdId(prodId);
+    }
+
+    @Override
     public List<Order> listOrdersByUserId(int userId){
         return orderMapper.listOrdersByUserId(userId);
     }

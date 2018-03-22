@@ -25,6 +25,10 @@
         order by orderId desc
     </select>
 
+    <select id="getSoldNumByProdId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select sum(prodNum) from orders where prodId = #{prodId,jdbcType=INTEGER};
+    </select>
+
     <insert id="addOrder" parameterType="com.hebaohua.netease.entity.Order" >
         insert into orders
         <trim prefix="(" suffix=")" suffixOverrides="," >

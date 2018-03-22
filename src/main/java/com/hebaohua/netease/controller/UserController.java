@@ -1,7 +1,9 @@
 package com.hebaohua.netease.controller;
 
 import com.hebaohua.netease.entity.Product;
+import com.hebaohua.netease.entity.ProductCustom;
 import com.hebaohua.netease.entity.User;
+import com.hebaohua.netease.service.OrderService;
 import com.hebaohua.netease.service.ProductService;
 import com.hebaohua.netease.service.UserService;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +34,9 @@ public class UserController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private OrderService orderService;
+
     @RequestMapping(value = "/")
     public String index(HttpSession session, ModelMap map) throws Exception{
         User user = (User)session.getAttribute("user");
@@ -38,7 +44,28 @@ public class UserController {
             map.addAttribute("user", user);
         }
         List<Product> products= productService.listProducts();
-        map.addAttribute("productList", products);
+        List<ProductCustom> productCustoms = new ArrayList<ProductCustom>();
+        for(Product product : products){
+            ProductCustom productCustom = new ProductCustom();
+            productCustom.setProdId(product.getProdId());
+            productCustom.setProdTitle(product.getProdTitle());
+            productCustom.setProdSummary(product.getProdSummary());
+            productCustom.setProdPrice(product.getProdPrice());
+            productCustom.setProdImgUrl(product.getProdImgUrl());
+            productCustom.setProdDetail(product.getProdDetail());
+            productCustom.setIsBuy(product.getIsBuy());
+            productCustom.setIsSell(product.getIsSell());
+            if(product.getIsSell() == true){
+                int soldNum = orderService.getSoldNumByProdId(product.getProdId());
+                productCustom.setSoldNum(soldNum);
+            }else {
+                productCustom.setSoldNum(0);
+            }
+
+            productCustoms.add(productCustom);
+
+        }
+        map.addAttribute("productList", productCustoms);
         return "index";
     }
 

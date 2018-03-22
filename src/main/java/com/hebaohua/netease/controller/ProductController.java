@@ -5,11 +5,13 @@ import com.hebaohua.netease.entity.Product;
 import com.hebaohua.netease.entity.User;
 import com.hebaohua.netease.service.OrderService;
 import com.hebaohua.netease.service.ProductService;
+import com.hebaohua.netease.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,11 +36,21 @@ public class ProductController {
     }
 
     @RequestMapping("/publicSubmit")
-    public String publicSubmit(HttpServletRequest request, ModelMap map){
+    public String publicSubmit(@RequestParam(value = "imgFile", required = false) MultipartFile file, HttpServletRequest request, ModelMap map){
         Product product = new Product();
+
+        if(file == null || file.isEmpty() || file.getSize() < 1){
+            product.setProdImgUrl(request.getParameter("image"));
+        }else{
+            String path = FileUploadUtil.getFileInfo(request, file);
+            product.setProdImgUrl(path);
+
+        }
+
+
         product.setProdTitle(request.getParameter("title"));
         product.setProdSummary(request.getParameter("summary"));
-        product.setProdImgUrl(request.getParameter("image"));
+
         product.setProdDetail(request.getParameter("detail"));
         product.setProdPrice(Double.valueOf(request.getParameter("price")));
         productService.insertProd(product);
@@ -75,13 +87,22 @@ public class ProductController {
 
     @RequestMapping("/editSubmit")
     public String editSubmitProduct(@RequestParam("id") int prodId,
+                                    @RequestParam(value = "imgFile", required = false) MultipartFile file,
                                     HttpServletRequest request,
                                     ModelMap map){
         Product product = new Product();
         product.setProdId(prodId);
+
+        if(file == null || file.isEmpty() || file.getSize() < 1){
+            product.setProdImgUrl(request.getParameter("image"));
+        }else{
+            String path = FileUploadUtil.getFileInfo(request, file);
+            product.setProdImgUrl(path);
+
+        }
+
         product.setProdTitle(request.getParameter("title"));
         product.setProdSummary(request.getParameter("summary"));
-        product.setProdImgUrl(request.getParameter("image"));
         product.setProdDetail(request.getParameter("detail"));
         product.setProdPrice(Double.valueOf(request.getParameter("price")));
         productService.updateProduct(product);

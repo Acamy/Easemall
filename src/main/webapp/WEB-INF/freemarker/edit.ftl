@@ -13,7 +13,7 @@
     </div>
     <#else>
     <div class="n-public">
-        <form class="m-form m-form-ht" id="form" method="post" action="/editSubmit?id=${product.prodId}" onsubmit="return false;" autocomplete="off">
+        <form class="m-form m-form-ht" id="form" method="post" action="/editSubmit?id=${product.prodId}" enctype="multipart/form-data" onsubmit="return false;" autocomplete="off">
             <div class="fmitem">
                 <label class="fmlab">标题：</label>
                 <div class="fmipt">
@@ -31,6 +31,7 @@
                 <label class="fmlab">图片：</label>
                 <div class="fmipt">
                     <input class="u-ipt ipt" name="image" value="${product.prodImgUrl}" placeholder="图片地址"/>
+                    <input type="file" id="imageUpload" name="imgFile" />
                 </div>
             </div>
             <div class="fmitem">

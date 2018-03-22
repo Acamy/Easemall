@@ -25,7 +25,7 @@
             <div class="fmitem">
                 <label class="fmlab">图片：</label>
                 <div class="fmipt">
-                    <input id='img_id' class="u-ipt ipt" name="image" placeholder="图片地址"/>
+                    <input id='img_id' class="u-ipt ipt" name="image" placeholder="图片地址,可直接粘贴URL"/>
                     <input type="file" id="imageUpload" name="imgFile" />
                 </div>
             </div>

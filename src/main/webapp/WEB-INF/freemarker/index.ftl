@@ -41,9 +41,19 @@
                         <h3>${x.prodTitle}</h3>
                         <div class="price"><span class="v-unit">¥</span><span class="v-value">${x.prodPrice}</span></div>
                         <#if user?? && user.userType==0 && x.isBuy><span class="had"><b>已购买</b></span></#if>
-                        <#if user?? && user.userType==1 && x.isSell><span class="had"><b>已售出</b></span></#if>
+                        <#if user?? && user.userType==1 && x.isSell>
+                            <span class="had">
+                                <b>已出售</b>
+                            </span>
+                        </#if>
                     </a>
-                    <#if user?? && user.userType==1 && !x.isSell><span class="u-btn u-btn-normal u-btn-xs del" data-del="${x.prodId}">删除</span></#if>
+                    <#if user?? && user.userType==1>
+                        <#if x.isSell>
+                            <span class="del">已售${x.soldNum}件</span>
+                        <#else>
+                            <span class="u-btn u-btn-normal u-btn-xs del" data-del="${x.prodId}">删除</span>
+                        </#if>
+                    </#if>
                 </li>
             </#list>
         </#if>

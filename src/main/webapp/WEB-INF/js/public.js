@@ -33,6 +33,7 @@
 				var value = image.value.trim();
 				if(value != '' && /^(http|https):\/\//.test(value) && /\.(jpg|gif|png)$/.test(value)){
 					imgpre.src = value;
+                    $('imageUpload').value = '';
 				}
 			}.bind(this),false);
 		},
@@ -41,7 +42,7 @@
 			[
 				[title,function(value){return value.length<2 || value.length>80}],
 				[summary,function(value){return value.length<2 || value.length>140}],
-				[image,function(value){return value == '' || !(/^(http|https):\/\//.test(value) && /\.(jpg|gif|png)$/.test(value))}],
+				[image,function(value){return value == '' || !(/\.(jpg|gif|png)$/.test(value))}],
 				[detail,function(value){return value.length<2 || value.length>1000}],
 				[price,function(value){return value == '' || !Number(value)}]
 			].forEach(function(item){
@@ -57,40 +58,24 @@
 	};
 	page.init();
 
-    $('imageUpload').onchange = function() {
-        var imgFile = this.files[0];
-        //获取input:type='file'选中文件的内容
-        var fileName= $("imageUpload").value;
-
-        if (fileName == null || fileName == "") {
-            alert("请选择上传文件");
-            document.getElementById('imgpre').src = '';
-        } else {
-            var fr = new FileReader();
-            fr.onload = function() {
-                //$("img_id").value = fr.result;
-                $('imgpre').src = fr.result;
-            };
-            fr.readAsDataURL(imgFile);
-
-            var formData = new FormData();
-            //此处将所要传递的数据append到formData中
-            formData.append("fileinfo", imgFile);
-
-
-            ajax({
-                url: "/uploadFile",
-                type: "POST",
-                data: formData,
-                processData: false,       //必不可缺
-                contentType: false,       //必不可缺
-                success: function (e) {
-                    alert("文件上传成功");
-                    //$("#file").val() == "";
-                }
-            })
-
+    $('imageUpload').addEventListener('change', function(){
+        //当没选中图片时，清除预览
+        if(this.files.length === 0){
+            $('imgpre').src = '';
+            return;
         }
-    };
+
+        //实例化一个FileReader
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            //当reader加载时，把图片的内容赋值给
+            $('imgpre').src = e.target.result;
+            image.value = $('imageUpload').value;
+        };
+
+        //读取选中的图片，并转换成dataURL格式
+        reader.readAsDataURL(this.files[0]);
+    }, false);
 
 })(window,document);
